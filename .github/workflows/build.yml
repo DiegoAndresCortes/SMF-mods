@@ -1,0 +1,20 @@
+name: Build
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build all packages
+        run: |
+          for D in *; do
+            if [ -d "${D}" ]; then
+              VERSION=$(sed -n "s/<version>\([0-9.]*\)<\/version>/\1/p" $D/package-info.xml | sed "s/\./-/g;s/\s//g")
+              echo "${D}_$VERSION.tar.gz"
+              (cd "${D}" && tar zcvf "../${D}_$VERSION.tar.gz" *)
+            fi
+          done
+      - uses: actions/upload-artifact@v3
+        with:
+          path: "*.tar.gz"
