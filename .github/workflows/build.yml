@@ -15,6 +15,6 @@ jobs:
               (cd "${D}" && tar zcvf "../${D}_$VERSION.tar.gz" *)
             fi
           done
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           path: "*.tar.gz"
